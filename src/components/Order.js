@@ -61,8 +61,17 @@ callAPI(){
 }
 handleChange = (event) => {
     console.log(event.target.value+ " " +event.target.id)
+    const id = event.target.id.replace("selection_", "");
+    
     this.setState({ value: event.target.value });
-  };
+    let json = this.state.jsonDatas
+    console.log(json)
+    for (const [index, value] of json.entries()) {
+      if(value._id == id){
+        //to do put orders
+      }
+  }
+}
 render(){
     return (
         <div>
