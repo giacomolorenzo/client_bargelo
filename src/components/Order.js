@@ -38,10 +38,10 @@ callAPI(){
             
             <div className='form-group col mt-6'>
              <select id={'selection_'+value._id} name='stato' className='form-control shadow p-1  bg-white rounded' onChange={this.handleChange} >
-                <option value="Aperto" selected>Aperto</option>
-                <option value="Gestito">Gestito</option>
-                <option value="Chiuso">Chiuso</option>
-                <option value ="Pagato">Pagato</option>
+                {value.order_status == "Aperto"?( <option value="Aperto" selected >Aperto</option> ):( <option value="Aperto">Aperto</option>)}
+                {value.order_status == "Gestito"?( <option value="Gestito" selected >Gestito</option> ):( <option value="Gestito">Gestito</option>)}
+                {value.order_status == "Chiuso"?( <option value="Chiuso" selected >Chiuso</option> ):( <option value="Chiuso">Chiuso</option>)}
+                {value.order_status == "Pagato"?( <option value="Pagato" selected >Pagato</option> ):( <option value="Pagato">Pagato</option>)}
              </select>
             </div>
             
@@ -68,7 +68,17 @@ handleChange = (event) => {
     console.log(json)
     for (const [index, value] of json.entries()) {
       if(value._id == id){
-        //to do put orders
+        console.log(value)
+        value.order_status = event.target.value;
+        fetch('http://localhost:5000/orders', {
+        method: 'PUT',
+        body: JSON.stringify(value),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        console.log(res)
+    }).catch(err => {console.log(err); throw err;});
       }
   }
 }
